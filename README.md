@@ -38,6 +38,21 @@ Requirements: Node.js 22.13 or newer and pnpm.
 pnpm build
 ```
 
+## Deploy from GitHub with Cloudflare Workers
+
+1. In Cloudflare, open **Workers & Pages** and choose **Create application**.
+2. Import the GitHub repository and select the `main` branch.
+3. Set the build command to `pnpm build`.
+4. Set the deploy command to `pnpm deploy`.
+5. Keep the root directory as `/`.
+6. Add these three **runtime secrets** under the Worker's **Settings → Variables & Secrets**:
+   - `MAX_SITE_PASSWORD`
+   - `MAX_SITE_SESSION_SECRET`
+   - `NTFY_URL`
+7. Redeploy after adding the secrets.
+
+Every new commit to `main` will then trigger another deployment.
+
 ## Important security note
 
 Never commit `.env.local` or your real password, session secret, or ntfy topic. The included `.gitignore` excludes local environment files.
