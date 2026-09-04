@@ -1,0 +1,17 @@
+{
+  "name": "Send to Max",
+  "short_name": "Max",
+  "description": "Send a short message to Max, the little desktop robot.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090d12",
+  "theme_color": "#171d24",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
