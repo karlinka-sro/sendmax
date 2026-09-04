@@ -78,12 +78,12 @@ export default function MaxApp() {
             </div>
           </div>
 
-          <div className="robot-shell" aria-label="Max looking at you">
-            <div className="robot-button" aria-hidden="true" />
-            <div className="robot-screen" aria-hidden="true">
-              <span className="robot-eye" />
-              <span className="robot-eye" />
-            </div>
+          <div className="robot-portrait">
+            <img
+              src="/max-robot.png"
+              alt="Max, a black 3D-printed desktop robot with two cyan eyes"
+              className="robot-image"
+            />
           </div>
 
           <div className="mt-7">
