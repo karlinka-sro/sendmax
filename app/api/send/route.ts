@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { hasAccess } from '@/lib/site-auth';
+import { getRuntimeSetting } from '@/lib/runtime-env';
 
 const MAX_LENGTH = 72;
 
@@ -23,7 +24,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid message.' }, { status: 400 });
   }
 
-  const ntfyUrl = process.env.NTFY_URL;
+  const ntfyUrl = getRuntimeSetting('NTFY_URL');
   if (!ntfyUrl) {
     return NextResponse.json({ error: 'Messaging is not configured.' }, { status: 503 });
   }

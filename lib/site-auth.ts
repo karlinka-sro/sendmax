@@ -1,3 +1,5 @@
+import { getRuntimeSetting } from '@/lib/runtime-env';
+
 const encoder = new TextEncoder();
 
 export const ACCESS_COOKIE = 'max_friend_access';
@@ -31,12 +33,12 @@ function constantTimeEqual(left: string, right: string) {
 }
 
 export function passwordMatches(candidate: string) {
-  const configured = process.env.MAX_SITE_PASSWORD;
+  const configured = getRuntimeSetting('MAX_SITE_PASSWORD');
   return Boolean(configured && constantTimeEqual(candidate, configured));
 }
 
 export async function hasAccess(cookieHeader: string | null) {
-  const secret = process.env.MAX_SITE_SESSION_SECRET;
+  const secret = getRuntimeSetting('MAX_SITE_SESSION_SECRET');
   if (!secret || !cookieHeader) return false;
 
   const token = cookieHeader

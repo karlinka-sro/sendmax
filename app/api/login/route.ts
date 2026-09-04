@@ -5,6 +5,7 @@ import {
   createAccessToken,
   passwordMatches,
 } from '@/lib/site-auth';
+import { getRuntimeSetting } from '@/lib/runtime-env';
 
 export async function POST(request: Request) {
   let password = '';
@@ -20,7 +21,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Incorrect password.' }, { status: 401 });
   }
 
-  const secret = process.env.MAX_SITE_SESSION_SECRET;
+  const secret = getRuntimeSetting('MAX_SITE_SESSION_SECRET');
   if (!secret) {
     return NextResponse.json({ error: 'Login is not configured.' }, { status: 503 });
   }
