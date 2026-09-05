@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
 const MAX_LENGTH = 72;
+const DIRECT_NTFY_URL = 'https://ntfy.sh/max-friend-7b4e92d6ac18f305c841';
 
 type SendState = 'idle' | 'sending' | 'sent' | 'error';
 
@@ -48,7 +49,25 @@ export default function MaxApp() {
         window.location.reload();
         return;
       }
-      if (!response.ok) throw new Error(`message endpoint returned ${response.status}`);
+      if (!response.ok) {
+        if (response.status !== 502) {
+          throw new Error(`message endpoint returned ${response.status}`);
+        }
+
+        // Free ntfy can rate-limit the shared outbound IP addresses used by
+        // Cloudflare Workers. Fall back to the visitor's own connection.
+        const directResponse = await fetch(DIRECT_NTFY_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8',
+            'X-Title': 'Message for Max',
+          },
+          body: clean,
+        });
+        if (!directResponse.ok) {
+          throw new Error(`ntfy returned ${directResponse.status}`);
+        }
+      }
       setMessage('');
       setSendState('sent');
     } catch {
